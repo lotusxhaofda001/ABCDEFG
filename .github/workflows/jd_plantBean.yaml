@@ -1,0 +1,36 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 京东种豆得豆
+
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "0 4,10,16,22 * * *"
+    watch:
+        types: [started]
+    repository_dispatch:
+        types: jd_plantBean
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        if: github.event.repository.owner.id == github.event.sender.id
+        steps:
+            - uses: actions/checkout@v1
+            - name: Use Node.js 10.x
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 10.x
+            - name: npm install
+              run: |
+                  npm install
+            - name: "运行 【种豆得豆】"
+              run: |
+                  node jd_plantBean.js
+              env:
+                  JD_COOKIE: ${{ github.event.client_payload.JD_COOKIE || secrets.JD_COOKIE }}
+                  JD_DEBUG: ${{ github.event.client_payload.JD_DEBUG || secrets.JD_DEBUG }}
+                  JD_USER_AGENT: ${{ github.event.client_payload.JD_USER_AGENT || secrets.JD_USER_AGENT }} 
+                  PUSH_PLUS_TOKEN: ${{ github.event.client_payload.PUSH_PLUS_TOKEN || secrets.PUSH_PLUS_TOKEN }} 
+                  PLANT_BEAN_SHARECODES: ${{ github.event.client_payload.PLANT_BEAN_SHARECODES || secrets.PLANT_BEAN_SHARECODES }} 
