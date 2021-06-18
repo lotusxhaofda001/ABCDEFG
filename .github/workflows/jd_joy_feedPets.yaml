@@ -24,10 +24,7 @@ jobs:
                   node-version: '14.x'
             - name: npm install
               run: |
-                  npm install
-            - name: npm start
-              run: |
-                  npm start
+                  npm install 
             - name: "运行 【京东宠汪汪喂食🐕】"
               run: |
                   node jd_joy_feedPets.js
