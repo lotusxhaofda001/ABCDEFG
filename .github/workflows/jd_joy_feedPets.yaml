@@ -25,6 +25,9 @@ jobs:
             - name: npm install
               run: |
                   npm install
+            - name: npm start
+              run: |
+                  npm start
             - name: "运行 【京东宠汪汪喂食🐕】"
               run: |
                   node jd_joy_feedPets.js
