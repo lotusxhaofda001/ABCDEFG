@@ -22,12 +22,12 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 let message = '', subTitle = '';
-let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 10;   //每次喂养数量 [10,20,40,80]
+let FEED_NUM = ($.getdata('joyFeedCount') * 1) || 80;   //每次喂养数量 [10,20,40,80]
 let teamLevel = `2`;//参加多少人的赛跑比赛，默认是双人赛跑，可选2，10,50。其他不可选，其中2代表参加双人PK赛，10代表参加10人突围赛，50代表参加50人挑战赛，如若想设置不同账号参加不同类别的比赛则用&区分即可(如：`2&10&50`)
 //是否参加宠汪汪双人赛跑（据目前观察，参加双人赛跑不消耗狗粮,如需参加其他多人赛跑，请关闭）
 // 默认 'true' 参加双人赛跑，如需关闭 ，请改成 'false';
 let joyRunFlag = true;
-let jdNotify = true;//是否开启静默运行，默认true开启
+let jdNotify = false;//是否开启静默运行，默认true开启
 let joyRunNotify = true;//宠汪汪赛跑获胜后是否推送通知，true推送，false不推送通知
 const JD_API_HOST = 'https://jdjoy.jd.com/pet'
 const weAppUrl = 'https://draw.jdfcloud.com//pet';
