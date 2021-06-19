@@ -149,8 +149,8 @@ async function clubLottery() {
     await vvipclub_shaking_info();//京东会员：查询多少次摇奖次数
     await shaking();//开始摇奖
     await shakeSign();//京东会员签到
-    await superShakeBean();//京东APP首页超级摇一摇
-    await superbrandShakeBean();//京东APP首页超级品牌日
+    // await superShakeBean();//京东APP首页超级摇一摇
+    // await superbrandShakeBean();//京东APP首页超级品牌日
     await mofang();//小魔方
   } catch (e) {
     $.logErr(e)
