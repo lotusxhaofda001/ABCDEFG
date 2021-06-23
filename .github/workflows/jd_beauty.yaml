@@ -6,7 +6,7 @@ name: 京东美丽研究院
 on:
     workflow_dispatch:
     schedule:
-        - cron: "1 7,12,19 * * *"
+        - cron: "1 8,12,19 * * *"
     watch:
         types: [started]
     repository_dispatch:
