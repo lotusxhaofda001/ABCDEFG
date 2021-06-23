@@ -6,7 +6,7 @@ name: JD每日抽奖
 on:
     workflow_dispatch:
     schedule:
-        - cron: "13 1,22,23 * * *"
+        - cron: "13 1,16,23 * * *"
     watch:
         types: [started]
     repository_dispatch:
