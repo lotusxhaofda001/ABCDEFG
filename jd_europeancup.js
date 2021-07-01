@@ -31,7 +31,7 @@ if ($.isNode()) {
 const JD_API_HOST = `https://api.m.jd.com/client.action`;
 message = ""
 $.actid = "901100032442101"
-$.shareuuid = ["50fd707242c346cfbb1eea63772e3aa","4893f9fbaa474900a1aa96f3dc740cf7","8343bbaefeeb4aa3bdee290012861bb2"]
+$.shareuuid = ["fbb67297a50143b49394889a0d1f64ca","20b814067716401e94aeb655ddaf014a","faf5d8f58fb642cc8554da24089c9b61","fb0ed702292946748f7cde8b37f9ff73","94d3ca40a7ca4f49bab30c89c6101ef5"]
     !(async () => {
         if (!cookiesArr[0]) {
             $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/', {
@@ -315,10 +315,9 @@ function getUid() {
                 } else {
                     data = JSON.parse(data);
                     if (data.data) {
-                        if ($.index == 1) {
-                            $.myid = data.data.uid
-                            console.log(`账号1欧洲杯助力码为 ${$.myid}`)
-                        }
+
+                        $.myid = data.data.uid
+                        console.log(`账号${$.index}欧洲杯助力码为 ${$.myid}`) 
                         $.actid = data.data.activityId
                         /*      $.pinImg = data.data.yunMidImageUrl
                               $.nick = data.data.nickname
