@@ -24,7 +24,10 @@ jobs:
                   node-version: 10.x
             - name: npm install
               run: |
-                  npm install
+                  npm install -g npm
+                  npm cache clean
+                  npm update
+                  npm install node-fetch
             - name: "运行 【宠汪汪🐕】"
               run: |
                   node jd_joy.js
