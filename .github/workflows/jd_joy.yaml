@@ -26,6 +26,7 @@ jobs:
               run: |
                   npm install
                   npm install -g node-fetch
+                  npm install -g png-js
             - name: "运行 【宠汪汪🐕】"
               run: |
                   node jd_joy.js
