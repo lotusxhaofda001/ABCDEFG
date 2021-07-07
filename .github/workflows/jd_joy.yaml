@@ -27,6 +27,7 @@ jobs:
                   npm install
                   npm install node-fetch
                   npm install png-js
+                  npm install canvas
             - name: "运行 【宠汪汪🐕】"
               run: |
                   node jd_joy.js
