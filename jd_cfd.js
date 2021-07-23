@@ -69,7 +69,7 @@ $.appId = 10028;
   $.CryptoJS = $.isNode() ? require('crypto-js') : CryptoJS;
   await requestAlgo();
   await $.wait(1000)
-  let res = await getAuthorShareCode('https://wuzhi03.coding.net/p/dj/d/shareCodes/git/raw/main/jd_cfd.json')
+  let res = await getAuthorShareCode('')
   $.strMyShareIds = [...(res && res.shareId || [])]
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
