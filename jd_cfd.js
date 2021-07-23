@@ -48,7 +48,7 @@ $.shareCodes = [
   '22FE55F4FB9639C90264664213D086631EEB99F5A228CAA864F7770168D55300@B930B47E34432CCD210E29B1C64E3573C815444D91E0D1817A2DE0B59CF67F4E@0A19BE3FA5994BD9861C5FBC1E43D3C38E4C9B3ED77C9D51B28666AD75D7E618@FAAD9F9AEC6800E800A0D634ECF1E5BD717871F88B624B245ED8645856000ADB',
 
 ];
-let cookiesArr = [], cookie = '';
+let cookiesArr = [], cookie = '', newShareCodes;
 
 const randomCount = $.isNode() ? 3 : 3;
 if ($.isNode()) {
@@ -56,6 +56,7 @@ if ($.isNode()) {
     cookiesArr.push(jdCookieNode[item])
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
+  if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -70,6 +71,11 @@ $.appId = 10028;
   await requestAlgo();
   await $.wait(1000)
   let res = await getAuthorShareCode('')
+  // if (!res) {
+  //   $.http.get({url: ''}).then((resp) => {}).catch((e) => console.log('刷新CDN异常', e));
+  //   await $.wait(1000)
+  //   res = await getAuthorShareCode('')
+  // }
   $.strMyShareIds = [...(res && res.shareId || [])]
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
@@ -98,10 +104,10 @@ $.appId = 10028;
   for (let j = 0; j < cookiesArr.length; j++) {
     cookie = cookiesArr[j];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-    $.canHelp = true
-    if ($.shareCodes && $.shareCodes.length) {
+    $.canHelp = false
+    if ($.newShareCodes && $.newShareCodes.length) {
       console.log(`\n自己账号内部循环互助\n`);
-      for (let id of $.shareCodes) {
+      for (let id of $.newShareCodes) {
         console.log(`账号${$.UserName} 去助力 ${id}`)
         await helpByStage(id)
         if (!$.canHelp) break
@@ -159,7 +165,7 @@ async function cfd() {
       let vo = $.info.buildInfo.buildList[key]
       let body = `strBuildIndex=${vo.strBuildIndex}`
       await getBuildInfo(body, vo)
-      await $.wait(2000)
+      await $.wait(1000)
     }
 
     //合成珍珠
@@ -520,7 +526,7 @@ async function querystorageroom(dwSceneId) {
                 strTypeCnt += `${bags[j]}|`
               }
             }
-            await $.wait(2000)
+            await $.wait(1000)
             await sellgoods(`strTypeCnt=${strTypeCnt}&dwSceneId=${dwSceneId}`)
           } else {
             console.log(`背包是空的，快去捡贝壳吧\n`)
@@ -577,7 +583,7 @@ async function getTakeAggrPage(type) {
                   if (vo.dwStatus !== 1) {
                     const body = `ddwCoin=${vo.ddwCoin}&ddwMoney=${vo.ddwMoney}&dwPrizeType=${vo.dwPrizeType}&strPrizePool=${vo.strPrizePool}&dwPrizeLv=${vo.dwBingoLevel}`
                     await rewardSign(body)
-                    await $.wait(2000)
+                    await $.wait(1000)
                   } else {
                     console.log(`今日已签到\n`)
                     break
@@ -908,7 +914,7 @@ async function employTourGuideInfo() {
               }
               const body = `strBuildIndex=${vo.strBuildIndex}&dwIsFree=${dwIsFree}&ddwConsumeCoin=${vo.ddwCostCoin}`
               await employTourGuide(body, buildNmae)
-              await $.wait(2000)
+              await $.wait(1000)
             } else if (vo.strBuildIndex !== 'food') {
               console.log(`【${buildNmae}】无可雇佣导游`)
             }
@@ -1275,7 +1281,7 @@ function browserTask(taskType) {
           } else {
             //领奖励
             await awardTask(1, taskinfo);
-            await $.wait(2000);
+            await $.wait(1000);
           }
         }
         break;
@@ -1528,20 +1534,21 @@ function readShareCode() {
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
-    // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
-    $.newShareCodes = [];
-    if ($.shareCodesArr[$.index - 1]) {
-      $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
+    // console.log(`第${$.index}个京东账号的助力码:::${jdFruitShareArr[$.index - 1]}`)
+    newShareCodes = [];
+    if (jdFruitShareArr[$.index - 1]) {
+      newShareCodes = jdFruitShareArr[$.index - 1].split('@');
     } else {
       console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      // const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-      $.newShareCodes = [...$.strMyShareIds];
+      const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
+      newShareCodes = shareCodes[tempIndex].split('@');
     }
-    // const readShareCodeRes = await readShareCode();
-    // if (readShareCodeRes && readShareCodeRes.code === 200) {
-    //   $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
-    // }
-    console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
+    const readShareCodeRes = await readShareCode();
+    if (readShareCodeRes && readShareCodeRes.code === 200) {
+      // newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
+      newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
+    }
+    console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
 }
