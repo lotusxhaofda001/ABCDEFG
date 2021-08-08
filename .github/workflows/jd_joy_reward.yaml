@@ -6,7 +6,7 @@ name: 宠汪汪兑换
 on:
     workflow_dispatch:
     schedule:
-        - cron: "38 23,7,15 * * *"
+        - cron: "0 0,8,16 * * *"
     watch:
         types: [started]
     repository_dispatch:
