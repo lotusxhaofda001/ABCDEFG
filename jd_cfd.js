@@ -46,6 +46,7 @@ if ($.isNode()) {
     cookiesArr.push(jdCookieNode[item])
   })
   if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
+  if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -80,7 +81,7 @@ $.appId = 10028;
       }
       $.allTask = []
       $.info = {}
-      UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString()};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
+      UA = `jdpingou;iPhone;4.13.0;14.4.2;${randomString(40)};network/wifi;model/iPhone10,2;appBuild/100609;ADID/00000000-0000-0000-0000-000000000000;supportApplePay/1;hasUPPay/0;pushNoticeIsOpen/1;hasOCPay/0;supportBestPay/0;session/${Math.random * 98 + 1};pap/JA2019_3111789;brand/apple;supportJDSHWK/1;Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148`
       token = await getJxToken()
       await shareCodesFormat()
       await cfd();
@@ -88,28 +89,37 @@ $.appId = 10028;
       UAInfo[$.UserName] = UA
     }
   }
-  for (let j = 0; j < cookiesArr.length; j++) {
-    cookie = cookiesArr[j];
+  for (let i = 0; i < cookiesArr.length; i++) {
+    cookie = cookiesArr[i];
     $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
     $.canHelp = true
     UA = UAInfo[$.UserName]
     if ($.shareCodes && $.shareCodes.length) {
       console.log(`\n自己账号内部循环互助\n`);
-      for (let id of $.shareCodes) {
-        console.log(`账号${$.UserName} 去助力 ${id}`)
-        await helpByStage(id)
-        await $.wait(3000)
-        if (!$.canHelp) break
+      for (let j = 0; j < $.shareCodes.length && $.canHelp; j++) {
+        console.log(`账号${$.UserName} 去助力 ${$.shareCodes[j]}`)
+        $.delcode = false
+        await helpByStage($.shareCodes[j])
+        await $.wait(2000)
+        if ($.delcode) {
+          $.shareCodes.splice(j, 1)
+          j--
+          continue
+        }
       }
     }
-    if (!$.canHelp) continue
-    if ($.strMyShareIds && $.strMyShareIds.length) {
+    if ($.strMyShareIds && $.strMyShareIds.length && $.canHelp) {
       console.log(`\n助力作者\n`);
-      for (let id of $.strMyShareIds) {
-        console.log(`账号${$.UserName} 去助力 ${id}`)
-        await helpByStage(id)
-        await $.wait(3000)
-        if (!$.canHelp) break
+      for (let j = 0; j < $.strMyShareIds.length && $.canHelp; j++) {
+        console.log(`账号${$.UserName} 去助力 ${$.strMyShareIds[j]}`)
+        $.delcode = false
+        await helpByStage($.strMyShareIds[j])
+        await $.wait(2000)
+        if ($.delcode) {
+          $.strMyShareIds.splice(j, 1)
+          j--
+          continue
+        }
       }
     }
   }
@@ -122,12 +132,12 @@ async function cfd() {
   try {
     nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000)
     let beginInfo = await getUserInfo();
-    if (beginInfo.Fund.ddwFundTargTm === 0) {
+    if (beginInfo.LeadInfo.dwLeadType === 2) {
       console.log(`还未开通活动，尝试初始化`)
       await noviceTask()
       await $.wait(2000)
       beginInfo = await getUserInfo(false);
-      if (beginInfo.Fund.ddwFundTargTm !== 0) {
+      if (beginInfo.LeadInfo.dwLeadType !== 2) {
         console.log(`初始化成功\n`)
       } else {
         console.log(`初始化失败\n`)
@@ -1148,7 +1158,10 @@ function helpByStage(shareCodes) {
           } else if (data.iRet === 2229 || data.sErrMsg === '助力失败啦~') {
             console.log(`助力失败：您的账号或被助力的账号可能已黑，请联系客服`)
             // $.canHelp = false
-          } else {
+          } else if (data.iRet === 2190 || data.sErrMsg === '达到助力上限') {
+            console.log(`助力失败：${data.sErrMsg}`)
+            $.delcode = true
+          } else{
             console.log(`助力失败：${data.sErrMsg}`)
           }
         }
@@ -1211,7 +1224,7 @@ function getUserInfo(showInvite = true) {
             sErrMsg,
             strMyShareId,
             dwLandLvl,
-            Fund = {},
+            LeadInfo = {},
             StoryInfo = {},
             Business = {}
           } = data;
@@ -1231,7 +1244,7 @@ function getUserInfo(showInvite = true) {
             ddwCoinBalance,
             strMyShareId,
             dwLandLvl,
-            Fund,
+            LeadInfo,
             StoryInfo
           };
           resolve({
@@ -1239,7 +1252,7 @@ function getUserInfo(showInvite = true) {
             ddwRichBalance,
             ddwCoinBalance,
             strMyShareId,
-            Fund,
+            LeadInfo,
             StoryInfo
           });
         }
@@ -1549,12 +1562,12 @@ function taskListUrl(function_path, body = '', bizCode = 'jxbfd') {
   };
 }
 
-function randomString() {
-  return Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10) +
-    Math.random().toString(16).slice(2, 10)
+function randomString(e) {
+  e = e || 32;
+  let t = "0123456789abcdef", a = t.length, n = "";
+  for (let i = 0; i < e; i++)
+    n += t.charAt(Math.floor(Math.random() * a));
+  return n
 }
 
 function showMsg() {
