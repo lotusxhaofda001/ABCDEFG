@@ -6,7 +6,7 @@ name: 省钱大赢家之翻翻乐
 on:
     workflow_dispatch:
     schedule:
-        - cron: "15 0-23/1 * * *"
+        - cron: "15 0-23/3 * * *"
     watch:
         types: [started]
     repository_dispatch:
