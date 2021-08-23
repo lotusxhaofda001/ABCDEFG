@@ -6,7 +6,7 @@ name: 生活·缴费-积分换话费
 on:
     workflow_dispatch:
     schedule:
-        - cron: "33 7,19 * * *"
+        - cron: "33 5,17 * * *"
     watch:
         types: [started]
     repository_dispatch:
