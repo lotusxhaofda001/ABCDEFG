@@ -1,4 +1,6 @@
+// @grant    require
 /*
+cron 20 0,6-23/2 * * * jd_cfd_loop.js
 京喜财富岛热气球挂机
 
 更新时间：2021-8-10
@@ -25,8 +27,7 @@ if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
     cookiesArr.push(jdCookieNode[item])
   })
-  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
-  if (JSON.stringify(process.env).indexOf('GITHUB') > -1) process.exit(0);
+  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {}; 
 } else {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
@@ -41,7 +42,8 @@ $.appId = 10028;
   await requestAlgo();
   await $.wait(1000)
   console.log('\n')
-  while (true) {
+  const loop_limit = $.isNode() ? (process.env.CFD_LOOP_LIMIT ? process.env.CFD_LOOP_LIMIT : 20) : ($.getdata('CFD_LOOP_LIMIT') ? $.getdata('CFD_LOOP_LIMIT') : 20)
+  while (count < loop_limit) {
     count++
     console.log(`============开始第${count}次挂机=============`)
     for (let i = 0; i < cookiesArr.length; i++) {
