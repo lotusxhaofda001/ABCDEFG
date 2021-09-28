@@ -29,16 +29,18 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
-                   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y',
+  //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
+  'bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y@t6r7od7a2l3a5qayk7vttbloda3h7wlwy7o5jii',
   //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'di5jpdr2jlbsfeb5vqbycfzfne@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y',
+  'di5jpdr2jlbsfeb5vqbycfzfne@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y@t6r7od7a2l3a5qayk7vttbloda3h7wlwy7o5jii',
   //账号三的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y',
+  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y@t6r7od7a2l3a5qayk7vttbloda3h7wlwy7o5jii',
   //账号四的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y',
+  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y@t6r7od7a2l3a5qayk7vttbloda3h7wlwy7o5jii',
   //账号五的好友shareCode,不同好友的shareCode中间用@符号隔开
-  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi',
+  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@t6r7od7a2l3a5qayk7vttbloda3h7wlwy7o5jii',
+  //账号六的好友shareCode,不同好友的shareCode中间用@符号隔开
+  'di5jpdr2jlbsfeb5vqbycfzfne@bknudbr7e4sqxzr2arauyklvyjg5eok2j5636by@4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly@4npkonnsy7xi2qmsbqxydsankfdnqmscxw4mrhi@nkvdrkoit5o654rdoqqsjrqmxwshrg6dqyvlc3y',
 ]
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
