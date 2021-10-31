@@ -36,7 +36,7 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 
-let jdNotify = false;//是否开启静默运行，默认true
+let jdNotify = true;//是否开启静默运行，默认true
 let sellFruit = true;//是否卖出金果得到金币，默认'true'
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = '', subTitle = '', fruitTotal = 0;
