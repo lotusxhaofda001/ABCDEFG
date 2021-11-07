@@ -27,7 +27,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let helpAuthor = false;
+let helpAuthor = true;
 const randomCount = $.isNode() ? 5 : 5;
 let cash_exchange = false;//是否消耗2元红包兑换200京豆，默认否
 const inviteCodes = [
@@ -38,6 +38,8 @@ const inviteCodes = [
   "f0RzKa_6Pq15@eU9YGpH1N4FdiC-hgwZ3@eU9Ya-zjYPlz8D3dz3YUhA@eU9Ya7nhYK509DjSnnVHgA@Ih41aey7YPQh82i6iw",
   "f0RzKa_6Pq15@eU9YGpH1N4FdiC-hgwZ3@eU9Ya-zjYPlz8D3dz3YUhA@eU9Ya7nhYK509DjSnnVHgA@eU9YM5HWEotCkxCtowBR",
 ]
+
+
 
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -54,7 +56,8 @@ let allMessage = '';
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  await requireConfig() 
+  await requireConfig()
+  $.authorCode = await getAuthorShareCode('https://wuzhi03.coding.net/p/dj/d/RandomShareCode/git/raw/main/JD_Cash.json')
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -95,8 +98,8 @@ async function jdCash() {
 
   await shareCodesFormat()
   // await helpFriends()
-  await getReward()
-  await getReward('2');
+  // await getReward()
+  // await getReward('2');
   $.exchangeBeanNum = 0;
   cash_exchange = $.isNode() ? (process.env.CASH_EXCHANGE ? process.env.CASH_EXCHANGE : `${cash_exchange}`) : ($.getdata('cash_exchange') ? $.getdata('cash_exchange') : `${cash_exchange}`);
   // if (cash_exchange === 'true') {
@@ -311,8 +314,8 @@ async function appdoTask(type,taskInfo) {
             if( data.code === 0){
               console.log(`任务完成成功`)
               // console.log(data.data.result.taskInfos)
-            }else{
-              console.log(data)
+            } else {
+              console.log(JSON.stringify(data))
             }
           }
         }
@@ -445,13 +448,11 @@ function getSign(functionid, body, uuid) {
       "client":"apple",
       "clientVersion":"10.1.0"
     }
-    let HostArr = ['jdsign.cf', 'signer.nz.lu']
-    let Host = HostArr[Math.floor((Math.random() * HostArr.length))]
     let options = {
       url: `https://cdn.nz.lu/ddo`,
       body: JSON.stringify(data),
       headers: {
-        Host,
+        "Host": "jdsign.cf",
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       },
       timeout: 30 * 1000
@@ -459,7 +460,7 @@ function getSign(functionid, body, uuid) {
     $.post(options, (err, resp, data) => {
       try {
         if (err) {
-          console.log(`${JSON.stringify(err)}`)
+          console.log(JSON.stringify(err))
           console.log(`${$.name} getSign API请求失败，请检查网路重试`)
         } else {
 
@@ -523,7 +524,9 @@ function shareCodesFormat() {
     } else {
       console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
-      $.newShareCodes = inviteCodes[tempIndex].split('@'); 
+      $.newShareCodes = inviteCodes[tempIndex].split('@');
+      let authorCode = $.authorCode.data ? deepCopy($.authorCode.data) : []
+      $.newShareCodes = [...(authorCode.map((item, index) => authorCode[index] = item['inviteCode'])), ...$.newShareCodes];
     }
     const readShareCodeRes = await readShareCode();
     if (readShareCodeRes && readShareCodeRes.code === 200) {
