@@ -27,7 +27,7 @@ export DO_TEN_WATER_AGAIN="" 默认再次浇水
 
 */
 const $ = new Env('东东农场');
-let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, newShareCodes, allMessage = '';
+let cookiesArr = [], cookie = '', jdFruitShareArr = [], isBox = false, notify, allMessage = '';
 //助力好友分享码(最多3个,否则后面的助力失败),原因:京东农场每人每天只有3次助力机会
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
