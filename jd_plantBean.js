@@ -30,7 +30,13 @@ const JD_ZLC_URL = process.env.JD_ZLC_URL ? process.env.JD_ZLC_URL : "https://zl
 //助力好友分享码(最多3个,否则后面的助力失败)
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
-let shareCodes = ['']
+let shareCodes = [ // IOS本地脚本用户这个列表填入你要助力的好友的shareCode
+                   //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '4npkonnsy7xi3ogm33t7o4ocqhkchilb3vsnrly',
+  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
+  'di5jpdr2jlbsfeb5vqbycfzfne',
+]
+
 let allMessage = ``;
 let codeType = 1;
 let currentRoundId = null;//本期活动id
@@ -130,7 +136,7 @@ async function jdPlantBean() {
       await shareCodesFormat();
 		  await doHelp()
 	  
-      await plantShareSupportList();
+      //await plantShareSupportList();
     } else {
       console.log(`种豆得豆-初始失败:  ${JSON.stringify($.plantBeanIndexResult)}`);
     }
