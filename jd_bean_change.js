@@ -3208,8 +3208,7 @@ function randomNumber(len) {
     return Date.now() + str;
 }
 // prettier-ignore
-function Env(t, e) {
-	"undefined" != typeof process && JSON.stringify(process.env).indexOf("GITHUB") > -1 && process.exit(0);
+function Env(t, e) { 
 	class s {
 		constructor(t) {
 			this.env = t
