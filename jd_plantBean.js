@@ -87,7 +87,7 @@ async function jdPlantBean() {
       console.log(`\n活动太火爆了，还是去买买买吧！\n`)
       return
     }
-    for (let i = 0; i < $.plantBeanIndexResult.data?.roundList?.length; i++) {
+    for (let i = 0; i < $.plantBeanIndexResult.data.roundList.length; i++) {
       if ($.plantBeanIndexResult.data.roundList[i].roundState === "2") {
         num = i
         break
