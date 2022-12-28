@@ -88,7 +88,7 @@ async function main() {
       await $.wait(1000)
     }
     await collectScore()
-    await helpFriends()
+    // await helpFriends()
     await getTaskDetail(22);
     await getTaskDetail(-1)
 
