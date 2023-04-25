@@ -134,7 +134,7 @@ async function jdPlantBean() {
       await doGetReward();
       await showTaskProcess();
       await shareCodesFormat();
-		  await doHelp()
+	  //await doHelp()
 	  
       //await plantShareSupportList();
     } else {
