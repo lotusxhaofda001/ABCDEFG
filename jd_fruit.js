@@ -34,12 +34,10 @@ let cookiesArr = [],
 //此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
 //下面给出两个账号的填写示例（iOS只支持2个京东账号）
 let shareCodes = [ // 这个列表填入你要助力的好友的shareCode
-    //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
-    '35fcfda6d3af48e7afe79f5e18a39e55@5a41b6db624346cdbe347b61279fda8f@3fa4d41fe66e47bd8a9549e33e3b9b54@5dc8a7b9f4544a8ca79f8cf62d0c7623@4918db5a466c4332843c75064a5a3880@9b8419ddb29240468d06edfd61fa642e',
-    //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
-    '35fcfda6d3af48e7afe79f5e18a39e55@5a41b6db624346cdbe347b61279fda8f@3fa4d41fe66e47bd8a9549e33e3b9b54@5dc8a7b9f4544a8ca79f8cf62d0c7623@4918db5a466c4332843c75064a5a3880@9b8419ddb29240468d06edfd61fa642e',
-    //账号三的好友shareCode,不同好友的shareCode中间用@符号隔开
-    '35fcfda6d3af48e7afe79f5e18a39e55@5a41b6db624346cdbe347b61279fda8f@3fa4d41fe66e47bd8a9549e33e3b9b54@5dc8a7b9f4544a8ca79f8cf62d0c7623@4918db5a466c4332843c75064a5a3880@9b8419ddb29240468d06edfd61fa642e',
+  //账号一的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '0874f1d19c07430e945985f6324a331b@af922a18a31c4e2eb219a8821994ef71@83139c82f94b483584e0aa17c809b418@f251d6e19eb8485f93067e119eb58b3d@7bfd52d119294cad86ab595dca96db5d',
+  //账号二的好友shareCode,不同好友的shareCode中间用@符号隔开
+  '9d08ed8537794ea8ba9fa12944f34412@af922a18a31c4e2eb219a8821994ef71@83139c82f94b483584e0aa17c809b418@f251d6e19eb8485f93067e119eb58b3d@7bfd52d119294cad86ab595dca96db5d',
 ]
 $.newShareCode = [];
 let codeType = 0;
