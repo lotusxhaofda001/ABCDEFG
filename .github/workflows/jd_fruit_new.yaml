@@ -24,7 +24,7 @@ jobs:
                   node-version: 18
             - name: npm install
               run: |
-                  npm install
+                  npx npm@6 install
             - name: "运行 【新京东农场】"
               run: |
                   node jd_fruit_new.js
