@@ -23,7 +23,7 @@ jobs:
                 node-version: 18
             - name: npm install
               run: |
-                  npm install
+                  npx npm@6 install
             - name: "运行 【京豆昨日收益】"
               run: |
                   node jd_bean_change.js
