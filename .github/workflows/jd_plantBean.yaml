@@ -23,7 +23,7 @@ jobs:
                 node-version: 18
             - name: npm install
               run: |
-                  npm install
+                  npx npm@6 install
             - name: "运行 【种豆得豆】"
               run: |
                   node jd_plantBean.js
