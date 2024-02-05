@@ -25,7 +25,7 @@ jobs:
                   node-version: 15.x
             - name: npm install
               run: |
-                  npm install
+                  npx npm@6 install
             - name: "运行 【JD临时测试脚本】"
               run: |
                   node jd_health_collect.js
