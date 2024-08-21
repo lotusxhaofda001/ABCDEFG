@@ -25,10 +25,6 @@ jobs:
             - name: npm install
               run: |
                   npx npm@6 install
-            - name: package-update
-              uses: actions/setup-node@v3
-              with:
-                args: -u --packageFile package.json  --dep dev 
             - name: "运行 【积分换话费】"
               run: |
                   node jd_dwapp.js
