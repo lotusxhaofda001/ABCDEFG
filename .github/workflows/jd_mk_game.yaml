@@ -1,16 +1,16 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: 每日签到得豆
+name: 赚汪贝兑礼品
 
 on:
     workflow_dispatch:
     schedule:
-        - cron: "0 1 * * *"
+        - cron: "2 2 * * *"
     watch:
         types: [started]
     repository_dispatch:
-        types: jd_dailysign
+        types: jd_mk_game
 
 jobs:
     build:
@@ -25,9 +25,9 @@ jobs:
             - name: npm install
               run: |
                   npx npm@6 install
-            - name: "运行 【每日签到得豆】"
+            - name: "运行 【赚汪贝兑礼品】"
               run: |
-                  node jd_dailysign.js
+                  node jd_mk_game.js
               env:
                   JD_COOKIE: ${{ github.event.client_payload.JD_COOKIE || secrets.JD_COOKIE }}
                   JD_DEBUG: ${{ github.event.client_payload.JD_DEBUG || secrets.JD_DEBUG }}
